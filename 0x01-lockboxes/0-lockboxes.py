@@ -1,46 +1,38 @@
 #!/usr/bin/python3
 
 
-class BoxUnlocker:
+def canUnlockAll(boxes):
     """
-    A class to determine if all boxes can be unlocked,
-    given the initial state.
-    Each box may contain keys to other boxes,
-    and the first box is initially
-    unlocked.
+    Determines if all boxes can be unlocked.
+
+    Args:
+        boxes (list of list of int):
+        A list where each element is a list of keys
+        corresponding to other boxes.
+        The first box (boxes[0]) is unlocked initially.
+
+    Returns:
+        bool: True if all boxes can be unlocked, False otherwise.
     """
 
-    def __init__(self, boxes):
-        """
-        Initializes the BoxUnlocker with a list of boxes.
+    # Initialize the set to keep track of visited boxes
+    visited = set()
 
-        Args:
-            boxes (list of list of int):
-            A list where each element is a list of
-            keys corresponding to other boxes.
-        """
-        self.boxes = boxes
-        self.visited = set()
-        self.stack = []
+    # Initialize the stack for Depth-First Search (DFS) with the first box
+    stack = [0]
 
-    def can_unlock_all(self):
-        """
-        Determines if all boxes can be unlocked.
+    while stack:
+        # Get the current box from the stack
+        box = stack.pop()
 
-        Returns:
-            bool: True if all boxes can be unlocked, False otherwise.
-        """
-        # Start with the first box
-        self.stack.append(0)
+        if box not in visited:
+            # Mark the current box as visited
+            visited.add(box)
 
-        while self.stack:
-            box = self.stack.pop()
-            if box not in self.visited:
-                self.visited.add(box)
-                # Add all keys in the current box to the stack
-                self.stack.extend(
-                    key for key in self.boxes[box] if key not in self.visited
-                )
+            # Add all keys in the current box to the stack,
+            # if they lead to unvisited boxes
+            stack.extend(
+                key for key in boxes[box] if key not in visited
+            )
 
-        # Check if all boxes have been visited
-        return len(self.visited) == len(self.boxes)
+    return len(visited) == len(boxes)
