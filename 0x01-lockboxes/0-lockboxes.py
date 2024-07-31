@@ -31,8 +31,8 @@ def canUnlockAll(boxes):
 
             # Add all keys in the current box to the stack,
             # if they lead to unvisited boxes
-            stack.extend(
-                key for key in boxes[box] if key not in visited
-            )
+            for key in boxes[box]:
+                if key not in visited:
+                    stack.append(key)
 
     return len(visited) == len(boxes)
