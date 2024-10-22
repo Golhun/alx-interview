@@ -12,7 +12,8 @@ def extract_input(input_line):
         input_line (str): A line from the HTTP request log.
 
     Returns:
-        dict: Dictionary with 'status_code' and 'file_size' extracted from the log.
+        dict: Dictionary with 'status_code' and
+        'file_size' extracted from the log.
     '''
     log_pattern = (
         r'\s*(?P<ip>\S+)\s*',
@@ -69,12 +70,15 @@ def run():
     '''Runs the log parser to read from stdin and compute metrics.'''
     line_num = 0
     total_file_size = 0
-    status_codes_stats = {str(code): 0 for code in (200, 301, 400, 401, 403, 404, 405, 500)}
-    
+    status_codes_stats = {
+        str(code): 0 for code in (
+            200, 301, 400, 401, 403, 404, 405, 500)}
+
     try:
         while True:
             line = input()
-            total_file_size = update_metrics(line, total_file_size, status_codes_stats)
+            total_file_size = update_metrics(
+                line, total_file_size, status_codes_stats)
             line_num += 1
             if line_num % 10 == 0:
                 print_statistics(total_file_size, status_codes_stats)
@@ -84,4 +88,3 @@ def run():
 
 if __name__ == '__main__':
     run()
-
