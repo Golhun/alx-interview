@@ -1,0 +1,21 @@
+
+### .gitignore
+
+```gitignore
+# Ignore Python cache files
+__pycache__/
+
+# Ignore the main test file
+0-main.py
+
+# Ignore editor/IDE files
+.vscode/
+.idea/
+
+# Ignore any environment files
+.env
+venv/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
